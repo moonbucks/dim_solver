@@ -1,5 +1,4 @@
-def possible_dim (num_gpu):
-
+def get_all_possible_dims (num_gpu):
   lst = [[num_gpu,1]]
   tp, pp = 1, num_gpu
   while pp>1:
@@ -12,10 +11,10 @@ def possible_dim (num_gpu):
 
 
 if __name__ == '__main__':
-  possible_dim(16)
-  possible_dim(32)
-  possible_dim(64)
-  possible_dim(256)
-  possible_dim(512)
-  possible_dim(1024)
-  possible_dim(2048)
+  get_all_possible_dims(16)
+  get_all_possible_dims(32)
+  get_all_possible_dims(64)
+  get_all_possible_dims(256)
+  get_all_possible_dims(512)
+  get_all_possible_dims(1024)
+  get_all_possible_dims(2048)
