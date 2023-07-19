@@ -21,7 +21,7 @@ def solve(args, n_stage, tp):
   #cost = toy_cost(n_chunk)
 
   #real
-  cost = pipeline_cost(args, n_chunk, i_stage)
+  cost = pipeline_cost(args, n_stage, n_chunk, i_stage)
 
   solver.Minimize(cost)
 
@@ -51,6 +51,9 @@ if __name__ == '__main__':
   best_cost = float('inf')
   best_dim = [1,1]
   for dim in lst:
+    if dim[0] > args.num_layers: # assert pp_size <= world_size
+      continue
+
     cost, n_chunk, i_stage = solve(args, dim[0], dim[1])
     if cost < best_cost:
       best_cost = cost
