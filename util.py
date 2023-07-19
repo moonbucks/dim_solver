@@ -3,7 +3,7 @@ import os
 
 def get_args():
   parser = argparse.ArgumentParser()
-  parser.add_argument('--num-gpu', type=int, default=4)
+  parser.add_argument('--num-gpu', type=int, default=16)
 
   # system
   parser.add_argument('--network-bandwidth', type=float, default=300, help='network bandwith in GB/s') # default=nvlink

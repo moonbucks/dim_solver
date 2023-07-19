@@ -21,7 +21,7 @@ def solve(args, n_stage, tp):
   #cost = toy_cost(n_chunk)
 
   #real
-  cost = pipeline_cost(args, n_stage, n_chunk, i_stage)
+  cost = pipeline_cost(args, n_stage, n_chunk, i_stage) # includes non-linear
 
   solver.Minimize(cost)
 
