@@ -19,6 +19,6 @@ parameters:
 
 - num_gpu= world size
 - network_bandwidth= network bandwidth in GB/s
-- compute_performance= single precision performance in FLOPs/s
+- compute_performance= single precision performance in TFLOPs
 
 model config will be added later. 
