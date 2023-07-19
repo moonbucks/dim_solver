@@ -1,6 +1,6 @@
-# dim_solver
+# Dimension solver
 
-dimension solver for 2d (pp+tp) parallelism
+This is a dimension solver for automated 2d (pp+tp) parallelism. 
 
 ## Install and Run
 
@@ -20,5 +20,8 @@ parameters:
 - num_gpu= world size
 - network_bandwidth= network bandwidth in GB/s
 - compute_performance= single precision performance in TFLOPs
-
-model config will be added later. 
+- batch_size= batch size
+- num_layers= number of transformer blocks
+- num_head= number of head
+- num_embd= embedding size
+- block_size= sequence length
