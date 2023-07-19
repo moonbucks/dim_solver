@@ -6,8 +6,8 @@ def get_args():
   parser.add_argument('--num-gpu', type=int, default=4)
 
   # system
-  parser.add_argument('--network-bandwidth', type=float, default=300, description='network bandwith in GB/s') # default=nvlink
-  parser.add_argument('--compute-performance', type=float, default=19.5, description='single-precision floating point performance in TFLOPS') # default=A100 
+  parser.add_argument('--network-bandwidth', type=float, default=300, help='network bandwith in GB/s') # default=nvlink
+  parser.add_argument('--compute-performance', type=float, default=19.5, help='single-precision floating point performance in TFLOPS') # default=A100 
 
   # model
   parser.add_argument('--num-layers', type=int, default=12)
