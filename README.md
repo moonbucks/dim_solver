@@ -25,3 +25,5 @@ parameters:
 - num_head= number of head
 - num_embd= embedding size
 - block_size= sequence length
+- opt_ar1= when the last AR is hidden
+- opt_ar0= when inner layers are hidden
