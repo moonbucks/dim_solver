@@ -26,4 +26,4 @@ parameters:
 - num_embd= embedding size
 - block_size= sequence length
 - opt_ar1= when the last AR is hidden
-- opt_ar0= when inner layers are hidden
+- opt_ar0= when inner ARs are hidden
