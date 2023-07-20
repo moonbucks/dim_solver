@@ -31,11 +31,16 @@ def stage_cost(args, n_stage):
   ### tp communication cost
   tp_size = args.num_gpu // n_stage
 
+  # we assume single precision parameters
   bandwidth = args.network_bandwidth * pow(10, 9)
 
-  # we assume single precision parameters
-  attn_comm = 0 / tp_size * 4 / bandwidth
-  mlp_comm = 0 / tp_size * 4 / bandwidth
+  # tensor size after attn_c_proj: [batch, block_size, embd_size]
+  # batch is multiplied outside this function
+  attn_comm = args.block_size * args.num_embd / tp_size * 4 / bandwidth
+
+  # tensor size after mlp_c_proj: [batch, block_size, embd_size]
+  # batch is multiplied outside this function
+  mlp_comm = args.block_size * args.num_embd / tp_size * 4 / bandwidth
 
   # we assume AR1 optimization
   tp_comm_cost = (attn_comm * (2 * num_layers_per_stage - 1) 
@@ -46,8 +51,10 @@ def stage_cost(args, n_stage):
   return cost
 
 def pp_comm_cost(args):
-  cost = 0
-
+  # tensor size after mlp_c_proj: [batch, block_size, embd_size] 
+  # batch is multiplied outside this function (L9)
+  bandwidth = args.network_bandwidth * pow(10, 9)
+  cost = args.block_size * args.num_embd * 4 / bandwidth 
   return cost
 
 def toy_cost(n_chunk):
