@@ -4,15 +4,16 @@ import math
 def pipeline_cost(args, n_stage, n_chunk, i_stage):
   # TODO add assertion. if false, return float('inf')
 
-  size_microbatch = args.batch_size // n_chunk # WARNING non-linear
-  cost = ( stage_cost(args, n_stage) * args.batch_size # computation 
+  size_microbatch = args.batch_size // n_chunk # WARNING non-linear (division)
+  #size_microbatch = n_chunk
+  cost = ( stage_cost(args, n_stage, i_stage) * args.batch_size # computation 
           + pp_comm_cost(args) * size_microbatch * (n_stage - 1) # pp communication
-          + stage_cost(args, n_stage) * size_microbatch * (n_stage - 1) # bubble
+          + stage_cost(args, n_stage, i_stage) * size_microbatch * (n_stage - 1) # bubble WARNING non-linear (multiplication when --opt-ar0 enabled)
           )
 
   return cost
 
-def stage_cost(args, n_stage):
+def stage_cost(args, n_stage, i_stage):
   #if args.num_layers % n_stage != 0:
   #  print(f'[stage_cost] {args.num_layers} % {n_stage} = {args.num_layers % n_stage}')
   #  return float('inf')
@@ -42,11 +43,18 @@ def stage_cost(args, n_stage):
   # batch is multiplied outside this function
   mlp_comm = args.block_size * args.num_embd / tp_size * 4 / bandwidth
 
-  # we assume AR1 optimization
-  tp_comm_cost = (attn_comm * (2 * num_layers_per_stage - 1) 
-                  + mlp_comm * 2 * num_layers_per_stage ) 
+  # depending on optimization level, tp cost varies 
+  if args.opt_ar1 and args.opt_ar0:
+    tp_comm_cost = (attn_comm * (num_layers_per_stage - 1) 
+                    + mlp_comm * num_layers_per_stage 
+                    - max(attn_comm, mlp_comm) * (i_stage-1))
+  elif args.opt_ar1:
+    tp_comm_cost = (attn_comm * (num_layers_per_stage - 1) 
+                    + mlp_comm * num_layers_per_stage) 
+  else:
+    tp_comm_cost = (attn_comm + mlp_comm) * num_layers_per_stage
 
-  cost = comp_cost + tp_comm_cost
+  cost = comp_cost + tp_comm_cost 
 
   return cost
 

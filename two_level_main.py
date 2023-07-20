@@ -1,5 +1,5 @@
 from ortools.linear_solver import pywraplp
-from util import get_all_possible_dims, get_args
+from util import get_all_possible_dims, get_args, set_model_args
 from cost import pipeline_cost
 
 def solve(args, n_stage, tp):
@@ -47,6 +47,7 @@ def solve(args, n_stage, tp):
 
 if __name__ == '__main__':
   args = get_args()
+  set_model_args(args, 'gpt3-175b')
   lst = get_all_possible_dims(args.num_gpu)
   best_cost = float('inf')
   best_dim = [1,1]
@@ -61,4 +62,4 @@ if __name__ == '__main__':
       best_n_chunk = n_chunk
       best_i_stage = i_stage
 
-  print(best_dim, best_cost, best_n_chunk, best_i_stage)
+  print(best_dim, best_cost, 'n_chunks:', best_n_chunk, 'internal stage', best_i_stage)

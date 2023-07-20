@@ -17,6 +17,10 @@ def get_args():
   parser.add_argument('--block-size', type=int, default=1024)
   parser.add_argument('--vocab-size', type=int, default=50304)
 
+  # optimization
+  parser.add_argument('--opt-ar1', action='store_true', help='optimizing the last ar')
+  parser.add_argument('--opt-ar0', action='store_true', help='optimizing all inner ars')
+
   args = parser.parse_args()
   return args
 
