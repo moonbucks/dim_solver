@@ -12,7 +12,7 @@ pip install ortools
 
 ### Run
 ```
-python main.py --num-gpu 4 --network-bandwith 300 --compute-performance 100
+python two_level_main.py --num-gpu 4 --network-bandwith 300 --compute-performance 100
 ```
 
 parameters: 
