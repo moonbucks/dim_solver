@@ -5,7 +5,6 @@ from cost_linear import pipeline_cost
 def solve(args, n_stage, tp):
   solver = pywraplp.Solver('Minimize Cost', pywraplp.Solver.GLOP_LINEAR_PROGRAMMING)
 
-  # global batch size = args 
   ## variables 
   #n_chunk = solver.IntVar(1, solver.infinity(), 'Number of chunks')
   size_microbatch = solver.IntVar(1, solver.infinity(), 'Size of microbatch')
