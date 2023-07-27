@@ -15,7 +15,7 @@ def solve(args, n_stage, tp):
   solver.Add(size_microbatch <= args.batch_size)
   solver.Add(i_stage <= 2 * args.num_layers / n_stage)
   #solver.Add(n_chunk >= 4 * n_stage) # recommended since it is a 'recommended' thing, it is actually not a 'constraint'. this can be relaxed  
-  solver.Add(size_microbatch >= i_stage - 1) # preferred to hide all internal ARs actually this is more likely 
+  solver.Add(size_microbatch >= i_stage) # preferred to hide all internal ARs actually this is more likely 
 
   ## objective 
 

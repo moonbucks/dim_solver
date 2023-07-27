@@ -4,10 +4,17 @@ import math
 def pipeline_cost(args, n_stage, size_microbatch, i_stage):
   # TODO add assertion. if false, return float('inf')
 
+  comp_cost = stage_cost(args, n_stage, i_stage) * args.batch_size # computation
+  comm_cost = pp_comm_cost(args) * size_microbatch * (n_stage - 1) # pp communication
+  bubble_overhead = stage_cost(args, n_stage, i_stage) * size_microbatch * (n_stage - 1) # bubble WARNING non-linear (multiplication when --opt-ar0 enabled)
+
+  print(comp_cost, comm_cost, bubble_overhead)
   cost = ( stage_cost(args, n_stage, i_stage) * args.batch_size # computation 
           + pp_comm_cost(args) * size_microbatch * (n_stage - 1) # pp communication
           + stage_cost(args, n_stage, i_stage) * size_microbatch * (n_stage - 1) # bubble WARNING non-linear (multiplication when --opt-ar0 enabled)
           )
+
+  
 
   return cost
 
